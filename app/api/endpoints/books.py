@@ -18,6 +18,10 @@ async def create_new_book(
     new_book = await book_crud.create_book(
         book, session,
     )
+    
+    #  функция постановки задачи на расслыку
+
+
     # session.add(new_book)
     # await session.commit()
     return new_book

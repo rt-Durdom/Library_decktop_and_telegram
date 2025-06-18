@@ -1,6 +1,10 @@
 import sys
+from redis import Redis
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
+r = Redis(host='localhost', port=6379)
 
 class Settings(BaseSettings):
     app_title: str = 'Библиотека'

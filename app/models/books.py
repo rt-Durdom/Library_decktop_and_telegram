@@ -1,10 +1,11 @@
 from __future__ import annotations
 from typing import List
 
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Table
-from sqlalchemy.orm import Mapped, relationship
+from sqlalchemy import Column, Integer, String, Date, ForeignKey, Table, Enum
+from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from app.core.db import Base  # потом через from app.core.base import Base
+from app.models.users import GanreBook
 
 
 book_author_table = Table(
@@ -20,7 +21,7 @@ class Book(Base):
     description = Column(String)
     public_data = Column(Date, nullable=False)
     # author = Column(Integer, ForeignKey('author.id'), nullable=False)
-    book_genre = Column(String, nullable=False)
+    book_genre: Mapped[GanreBook] = mapped_column(Enum(GanreBook), nullable=False)
     book_copies = Column(Integer, nullable=False)
 
     # Ralationship
@@ -29,6 +30,12 @@ class Book(Base):
         secondary=book_author_table,
         back_populates='book',
         lazy="selectin")
+    users: Mapped[List['User']] = relationship(
+        'User',
+        secondary='basket',
+        back_populates='books',
+        lazy="selectin"
+    )
 
     def __repr__(self):
         return (
