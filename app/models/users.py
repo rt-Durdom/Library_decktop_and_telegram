@@ -18,7 +18,7 @@ class GanreBook(str, Enum):
     DETECTIVE = 8
 
 
-class User(Base, SQLAlchemyBaseUserTable[int]):
+class User(SQLAlchemyBaseUserTable[int], Base):
     first_name = Column(String, nullable=False)
     last_name = Column(String, nullable=False)
     birth_date = Column(Date, nullable=True)
@@ -44,19 +44,17 @@ class Basket(Base):
     date_put_book: Mapped[DateTime] = mapped_column(
         DateTime,
         nullable=False,
-        default=datetime.now()
+        default=datetime.now
     )
     user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
     book_id = Column(Integer, ForeignKey('book.id'), primary_key=True)
 
-    # # Relationships
-    # user: Mapped['User'] = relationship('User', back_populates='books')
-    # book: Mapped['Book'] = relationship('Book', back_populates='users')
-
-
-
 
 class AddUserNotification(Base):
+    date_notification: Mapped[DateTime] = mapped_column(
+        DateTime,
+        nullable=False,
+        default=datetime.now
+    )
     user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
     book_id = Column(Integer, ForeignKey('book.id'), primary_key=True)
-    date_notification: Mapped[DateTime] = mapped_column(DateTime, nullable=False)

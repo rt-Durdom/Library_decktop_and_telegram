@@ -14,8 +14,8 @@ router.include_router(
 
 router.include_router(
     fastapi_users.get_register_router(UserRead, UserCreate),
-    prefix="/auth",
-    tags=["auth"],
+    prefix='/auth',
+    tags=['auth'],
 )
 
 router.include_router(
@@ -23,3 +23,9 @@ router.include_router(
     prefix="/users",
     tags=["users"],
 )
+
+# @router.post('take_book/{id}', response_model=UserRead)
+# async def take_book(
+#     id: int,
+#     session: AsyncSession = Depends(get_async_session)
+# ):

@@ -43,3 +43,6 @@ class Book(Base):
         f'description={self.description}'
         f'author={self.authors}'
         )
+    
+    class Config:
+        orm_mode = True
