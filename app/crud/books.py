@@ -20,10 +20,9 @@ class BookCRUD(CRUDBase):
     ):
         # Извлекаем данные книги (исключая авторов)
         book_data = object_b.model_dump(exclude={'authors'})
-        #print('1',book_data)
         # Получаем список ID авторов
         author_ids = object_b.authors
-        #print('2', author_ids)
+
         # Проверяем, что указаны авторы
         if not author_ids:
             raise ValueError("Необходимо указать хотя бы одного автора")

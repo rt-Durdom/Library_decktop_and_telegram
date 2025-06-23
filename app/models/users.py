@@ -46,8 +46,9 @@ class Basket(Base):
         nullable=False,
         default=datetime.now
     )
-    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
-    book_id = Column(Integer, ForeignKey('book.id'), primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    book_id = Column(Integer, ForeignKey('book.id'))
+
 
 
 class AddUserNotification(Base):
@@ -56,5 +57,5 @@ class AddUserNotification(Base):
         nullable=False,
         default=datetime.now
     )
-    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
-    book_id = Column(Integer, ForeignKey('book.id'), primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    book_id = Column(Integer, ForeignKey('book.id'))

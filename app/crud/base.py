@@ -5,8 +5,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.encoders import jsonable_encoder
 from fastapi import HTTPException
 
-from app.models.books import Book
-from app.models.authors import Author
+# from app.models.books import Book
+# from app.models.authors import Author
 from app.core.db import Base
 
 

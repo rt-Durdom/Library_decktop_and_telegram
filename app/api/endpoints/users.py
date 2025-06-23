@@ -1,7 +1,18 @@
 from fastapi import APIRouter
+from fastapi import Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
+from fastapi import HTTPException
 
-from app.core.users import auth_backend, fastapi_users
+
+from app.core.users import auth_backend, fastapi_users, current_user
 from app.schemas.users import UserRead, UserUpdate, UserCreate
+from app.core.db import get_async_session
+from app.crud.baskets import basket_crud
+from app.crud.books import book_crud
+from app.models.users import Basket
+from app.crud.users import user_crud
+from app.models.users import User
 
 
 router = APIRouter()
@@ -24,8 +35,22 @@ router.include_router(
     tags=["users"],
 )
 
-# @router.post('take_book/{id}', response_model=UserRead)
-# async def take_book(
-#     id: int,
-#     session: AsyncSession = Depends(get_async_session)
-# ):
+@router.post('/take_book/{book_id}', response_model=None)
+async def take_book(
+    book_id: int,
+    session: AsyncSession = Depends(get_async_session),
+    user: User = Depends(current_user),
+):
+    count_book = await session.execute(
+        select(Basket).where(Basket.book_id == book_id)
+    )
+
+    if count_book.scalars().first():
+        raise HTTPException(status_code=400, detail="Книга уже в корзине")
+    user_books = (await session.execute(
+        select(Basket).where(Basket.user_id == user.id)
+    )).scalars().all()
+    print(len(user_books))
+    if len(user_books) >= 5:
+        raise HTTPException(status_code=400, detail="Больше 5 книг взять нельзя")
+    return await basket_crud.take_book_on_basket(user, book_id, session)

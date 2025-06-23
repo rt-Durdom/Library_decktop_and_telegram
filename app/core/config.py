@@ -34,18 +34,18 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-import smtplib
-from email.message import EmailMessage
+# import smtplib
+# from email.message import EmailMessage
 
-msg = EmailMessage()
-msg["From"] = "your-email@gmail.com"
-msg["To"] = "recipient@example.com"
-msg["Subject"] = "Test from smtplib"
-msg.set_content("Hello, this is a test email!")
+# msg = EmailMessage()
+# msg["From"] = "your-email@gmail.com"
+# msg["To"] = "recipient@example.com"
+# msg["Subject"] = "Test from smtplib"
+# msg.set_content("Hello, this is a test email!")
 
-with smtplib.SMTP("smtp.gmail.com", 587) as server:  # или 465-порт
-    server.starttls()
-    server.login("your-email@gmail.com", "your-app-password")
-    server.send_message(msg)
-print("Email sent!")
+# with smtplib.SMTP("smtp.gmail.com", 587) as server:  # или 465-порт
+#     server.starttls()
+#     server.login("your-email@gmail.com", "your-app-password")
+#     server.send_message(msg)
+# print("Email sent!")
 
