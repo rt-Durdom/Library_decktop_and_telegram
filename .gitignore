@@ -55,18 +55,12 @@ cover/
 *.mo
 *.pot
 
-# Django stuff:
 *.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-
-# Flask stuff:
 instance/
 .webassets-cache
-
-# Scrapy stuff:
-.scrapy
 
 # Sphinx documentation
 docs/_build/
@@ -123,6 +117,7 @@ celerybeat.pid
 
 # Environments
 .env
+**/.env
 .venv
 .bot_venv
 .backend_venv
