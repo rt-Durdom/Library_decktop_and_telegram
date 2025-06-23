@@ -42,15 +42,14 @@ async def take_book(
     user: User = Depends(current_user),
 ):
     count_book = await session.execute(
-        select(Basket).where(Basket.book_id == book_id)
+        select(Basket).where(Basket.book_id == book_id, Basket.user_id == user.id)
     )
 
     if count_book.scalars().first():
-        raise HTTPException(status_code=400, detail="Книга уже в корзине")
+        raise HTTPException(status_code=400, detail="Книга уже в корзине") 
     user_books = (await session.execute(
         select(Basket).where(Basket.user_id == user.id)
     )).scalars().all()
-    print(len(user_books))
     if len(user_books) >= 5:
         raise HTTPException(status_code=400, detail="Больше 5 книг взять нельзя")
     return await basket_crud.take_book_on_basket(user, book_id, session)
