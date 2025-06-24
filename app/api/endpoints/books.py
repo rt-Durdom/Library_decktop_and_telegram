@@ -27,7 +27,7 @@ async def create_new_book(
     return new_book
 
 
-@router.get('/', response_model=None)  # list[BookRead]
+@router.get('/', response_model=list[BookRead])  # list[BookRead]
 async def get_all_books(
     session: AsyncSession = Depends(get_async_session)
 ):

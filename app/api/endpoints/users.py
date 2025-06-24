@@ -41,15 +41,24 @@ async def take_book(
     session: AsyncSession = Depends(get_async_session),
     user: User = Depends(current_user),
 ):
-    count_book = await session.execute(
-        select(Basket).where(Basket.book_id == book_id, Basket.user_id == user.id)
-    )
-
-    if count_book.scalars().first():
-        raise HTTPException(status_code=400, detail="Книга уже в корзине") 
+    count_book = await basket_crud.book_on_basket(user, book_id, session)
+    
     user_books = (await session.execute(
         select(Basket).where(Basket.user_id == user.id)
     )).scalars().all()
     if len(user_books) >= 5:
         raise HTTPException(status_code=400, detail="Больше 5 книг взять нельзя")
+    if count_book:
+        raise HTTPException(status_code=400, detail="Книга уже в корзине")
     return await basket_crud.take_book_on_basket(user, book_id, session)
+
+@router.delete('/delete_book/{book_id}', response_model=None)
+async def delete_book(
+    book_id: int,
+    session: AsyncSession = Depends(get_async_session),
+    user: User = Depends(current_user),
+):
+    book = await basket_crud.book_on_basket(user, book_id, session)
+    if not book:
+        raise HTTPException(status_code=400, detail="Книги в корзине нет")
+    return await basket_crud.remove_book_from_basket(user, book_id, session)
