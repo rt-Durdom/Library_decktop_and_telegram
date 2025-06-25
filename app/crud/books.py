@@ -91,15 +91,13 @@ class BookCRUD(CRUDBase):
 
         return db_obj
 
-
-
     async def get_all_books(  
         self,
         session: AsyncSession
     ) -> list[BookRead]:
         # Загружаем книги с авторами за один запрос
         books = (await session.execute(
-            select(Book).where(self.model.authors) # попросить пояснить Леонида self.model.authors
+            select(Book).where(self.model.authors)  # еще раз проверяем наличие авторов
         )).scalars().all()
     
         return books

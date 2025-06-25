@@ -27,6 +27,11 @@ class BasketCRUD(CRUDBase):
         await session.delete(basket)
         await session.commit()
         return basket
+    
+    async def get_books_on_basket(self, user: User, session: AsyncSession):
+        return (await session.execute(
+            select(Basket).where(Basket.user_id == user.id)
+        )).scalars().all()
 
 
 basket_crud = BasketCRUD(Basket)

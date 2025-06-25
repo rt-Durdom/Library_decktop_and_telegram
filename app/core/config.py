@@ -16,12 +16,16 @@ class Settings(BaseSettings):
     # mail_host: str  
     # email_port: int  
     # email_username: str  
-    # email_password: SecretStr 
+    email_password = None
 
     # # Redis settings
     # redis_host: str  
     # redis_port: int  
     # redis_db: int
+
+    # @property  
+    # def email_url(self):  
+    #     return f"smtps://{self.email_username}:{self.email_password}@{self.mail_host}:{self.email_port}"
 
     # @property  
     # def redis_url(self):  
@@ -34,18 +38,4 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-# import smtplib
-# from email.message import EmailMessage
-
-# msg = EmailMessage()
-# msg["From"] = "your-email@gmail.com"
-# msg["To"] = "recipient@example.com"
-# msg["Subject"] = "Test from smtplib"
-# msg.set_content("Hello, this is a test email!")
-
-# with smtplib.SMTP("smtp.gmail.com", 587) as server:  # или 465-порт
-#     server.starttls()
-#     server.login("your-email@gmail.com", "your-app-password")
-#     server.send_message(msg)
-# print("Email sent!")
 
