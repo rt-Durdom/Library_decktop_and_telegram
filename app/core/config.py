@@ -4,8 +4,6 @@ from redis import Redis
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-r = Redis(host='localhost', port=6379)
-
 class Settings(BaseSettings):
     app_title: str = 'Библиотека'
     database_url: str = None  # 'sqlite+aiosqlite:///./library_test.db'
@@ -16,11 +14,11 @@ class Settings(BaseSettings):
     # mail_host: str  
     # email_port: int  
     # email_username: str  
-    email_password = None
+    email_password: str
 
-    # # Redis settings
-    # redis_host: str  
-    # redis_port: int  
+    # Redis settings
+    redis_host: str  
+    redis_port: int  
     # redis_db: int
 
     # @property  
@@ -28,14 +26,12 @@ class Settings(BaseSettings):
     #     return f"smtps://{self.email_username}:{self.email_password}@{self.mail_host}:{self.email_port}"
 
     # @property  
-    # def redis_url(self):  
-    #     return f"redis://{self.redis_host}:{self.redis_port}/{self.redis_db}"
+    # def redis_url(self):
+    #     return f"redis://{self.redis_host}:{self.redis_port}"  # /{self.redis_db}"
 
     # config
     model_config = SettingsConfigDict(env_file='app/.env')
 
 
-
 settings = Settings()
-
-
+redis_util = Redis(host=settings.redis_host, port=settings.redis_port)

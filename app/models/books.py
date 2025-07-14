@@ -23,6 +23,7 @@ class Book(Base):
     # author = Column(Integer, ForeignKey('author.id'), nullable=False)
     book_genre: Mapped[GanreBook] = mapped_column(Enum(GanreBook), nullable=False)
     book_copies = Column(Integer, nullable=False)
+    # book_data_ouput = integer(default=30)
     
     
 

@@ -16,36 +16,6 @@ from app.models.users import Basket
 from app.crud.users import user_crud
 from app.models.users import User
 
-# _______________________________________________________
-
-import aiosmtplib
-from email.message import EmailMessage
-
-
-async def send_email():
-    msg = EmailMessage()
-    msg["From"] = "hubbit@mail.ru"
-    msg["To"] = "roman.turskov@yandex.ru"
-    msg["Subject"] = "Test from smtplib"
-    msg.set_content("Hello, this is a test email!")
-
-    await aiosmtplib.send(
-        msg,
-        hostname="smtp.mail.ru",
-        port=465,
-        use_tls=True,
-        username="hubbit@mail.ru",
-        password=settings.email_password
-    )
-
-
-    # with aiosmtplib as server:  # или 465-порт 587
-    #     server.starttls()
-    #     server.login("hubbit@mail.ru", "7zuIL%5g1n")
-    #     server.send(msg)
-    #print("Email sent!")
-
-# _______________________________________________________
 
 
 router = APIRouter()
@@ -84,7 +54,7 @@ async def take_book(
         raise HTTPException(status_code=400, detail="Больше 5 книг взять нельзя")
     if book:   #  TODO оператор exist() -  найти оператор SQL
         raise HTTPException(status_code=400, detail="Книга уже в корзине")
-    send_email()
+
     return await basket_crud.take_book_on_basket(user, book_id, session)
 
 @router.delete('/delete_book/{book_id}', response_model=None)

@@ -50,7 +50,6 @@ class Basket(Base):
     book_id = Column(Integer, ForeignKey('book.id'))
 
 
-
 class AddUserNotification(Base):
     date_notification: Mapped[DateTime] = mapped_column(
         DateTime,

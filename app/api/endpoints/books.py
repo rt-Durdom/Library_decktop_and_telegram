@@ -5,9 +5,11 @@ from app.schemas.books import BookBase, BookDB, BookRead
 from app.crud.books import book_crud
 from app.core.db import get_async_session
 from app.models.books import Book
+from app.core.config import settings, redis_util  # import redis
 
 
 router = APIRouter()
+#redis_util = settings.redis_url()
 
 
 @router.post('/', response_model=BookRead)
@@ -18,9 +20,8 @@ async def create_new_book(
     new_book = await book_crud.create_book(
         book, session,
     )
-    
-    #  функция постановки задачи на расслыку
 
+    redis_util.set('book', f'{new_book.id}')
 
     # session.add(new_book)
     # await session.commit()
@@ -32,6 +33,14 @@ async def get_all_books(
     session: AsyncSession = Depends(get_async_session)
 ):
     return await book_crud.get(session)
+
+
+@router.get('/{book_id}', response_model=BookRead)  # list[BookRead]
+async def get_all_books(
+    book_id: int,
+    session: AsyncSession = Depends(get_async_session)
+):
+    return await book_crud.get_obj_by_id(book_id,session)
 
 
 @router.delete('/{book_id}', response_model=BookRead)
