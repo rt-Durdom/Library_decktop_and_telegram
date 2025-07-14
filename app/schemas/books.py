@@ -9,7 +9,7 @@ class BookBase(BaseModel):
     name: str = Field(..., min_length=5, max_length=100)
     description: str = Field(..., min_length=5, max_length=100)
     public_data: Optional[date] = Field(None)
-    book_genre: str = Field(...)
+    book_genre: str = Field(..., )
     book_copies: int = Field(..., ge=0, le=5)
 
 

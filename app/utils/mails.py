@@ -18,7 +18,7 @@ async def send_email():
     msg["From"] = "hubbit@mail.ru"
     msg["To"] = "roman.turskov@yandex.ru"
     msg["Subject"] = "Test from smtplib"
-    msg.set_content(f"Hello, {book['name']}")
+    msg.set_content(f"Hello, {book['name']},")
 
     await aiosmtplib.send(
         msg,
