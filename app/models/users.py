@@ -7,7 +7,7 @@ from sqlalchemy import Column, String, Date, Integer, ForeignKey, Enum as SQLEnu
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 
-class GanreBook(str, Enum):
+class GanreBook(int, Enum):
     ACTION = 1
     COMEDY = 2
     DRAMA = 3

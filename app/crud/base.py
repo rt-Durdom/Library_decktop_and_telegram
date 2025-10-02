@@ -19,7 +19,7 @@ class CRUDBase():
     async def retrive(self, obj_id: int, session: AsyncSession):
         return (await session.execute(select(self.model).where(self.model.id == obj_id))
                 .scalars().first())
-    
+
     async def get(self, session: AsyncSession) -> list[ModelType]:
         return (await session.execute(select(self.model))).scalars().all()
 
@@ -36,7 +36,7 @@ class CRUDBase():
         await session.commit()
         await session.refresh(db_object)
         return db_object
-    
+
     async def update(
             self,
             db_object,
@@ -50,13 +50,13 @@ class CRUDBase():
         for field in obj_data:
             if field in update_data:
                 setattr(db_object, field, update_data[field])
-    
+
         session.add(db_object)
         # if commit:
         await session.commit()
         await session.refresh(db_object)
         return db_object
-    
+
     # async def remove(
     #         self,
     #         db_obj,
@@ -79,9 +79,8 @@ class CRUDBase():
         await session.delete(db_obj)
         await session.commit()
         return db_obj
-    
+
     async def get_obj_by_id(self, obj_id: int, session: AsyncSession):
         return (await session.execute(
             select(self.model).where(self.model.id == obj_id)
             )).scalars().first()
-
