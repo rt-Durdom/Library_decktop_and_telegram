@@ -2,16 +2,18 @@
 
 1. Для выполнения запуска клиента необходимо выполнить следующие действия:
  - запустить первый терминал и выполнить команду на запуск сервера:
-  `uvicorn app.main:app --reload`
+  
+   ```uvicorn app.main:app --reload```
 
 - запустить второй терминал и из папки client_app выполнить команду на запуск клиента:
-  `python3 main_client.py`
+  
+   ```python3 main_client.py```
 
   При необходимости сгенерировать документацию (получить контракт)из папки client_app введите команду:
- - curl http://localhost:8080/openapi.json > openapi.yaml
-
-- для запуска тестов выполнить команду:
-  `pytest`
+  
+   ```curl http://localhost:8080/openapi.json > openapi.yaml```
 
 
- Закрепляю навыки работы с FastAPI, SQLAlchemy, Alembic, Padyntic, FastAPI-Users, асинхронный код, Redis
+
+ # Автор: 
+[Турсков Роман](https://github.com/rt-Durdom)
