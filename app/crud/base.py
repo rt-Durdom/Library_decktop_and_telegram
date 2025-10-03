@@ -5,12 +5,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.encoders import jsonable_encoder
 from fastapi import HTTPException
 
-# from app.models.books import Book
-# from app.models.authors import Author
 from app.core.db import Base
 
 
 ModelType = TypeVar('ModelType', bound=Base)
+
 
 class CRUDBase():
     def __init__(self, model):
@@ -56,15 +55,6 @@ class CRUDBase():
         await session.commit()
         await session.refresh(db_object)
         return db_object
-
-    # async def remove(
-    #         self,
-    #         db_obj,
-    #         session: AsyncSession,
-    # ) -> ModelType:
-    #     await session.delete(db_obj)
-    #     await session.commit()
-    #     return db_obj
 
     async def remove(
         self,

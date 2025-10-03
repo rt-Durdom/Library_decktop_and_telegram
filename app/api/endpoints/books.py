@@ -21,7 +21,7 @@ async def create_new_book(
         book, session,
     )
 
-    redis_util.set('book', f'{new_book.id}') -  #TODO доделать по формату строки с очередь первый пришел первый ушел.
+    #redis_util.set('book', f'{new_book.id}') -  #TODO доделать по формату строки с очередь первый пришел первый ушел.
     # TODO Cron - планировщик задач в Ios
 
     # session.add(new_book)
